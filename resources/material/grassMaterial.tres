@@ -1,0 +1,23 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://d0200ibfn64oo"]
+
+[ext_resource type="Shader" uid="uid://usp3u40xxehi" path="res://shaders/grassShader.gdshader" id="1_x28qj"]
+[ext_resource type="Texture2D" uid="uid://dj7un48pcmmp4" path="res://resources/new_noise_texture_2d.tres" id="2_hgc2b"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_x28qj")
+shader_parameter/noise_texture = ExtResource("2_hgc2b")
+shader_parameter/noise_wind_strength = 1.0000000475
+shader_parameter/wind_speed = 1.0
+shader_parameter/wind_scale = 0.05
+shader_parameter/max_lean_distance = 1.0
+shader_parameter/base_color = Color(0.2, 0.5, 0.1, 1)
+shader_parameter/tip_color = Color(0.4, 0.5, 0.1, 1)
+shader_parameter/p0 = Vector3(0, 0, 0)
+shader_parameter/p1 = Vector3(0, 0.3, 0.1)
+shader_parameter/p2 = Vector3(0, 0.6, 0.4)
+shader_parameter/p3 = Vector3(0, 1, -0.1)
+shader_parameter/grass_width = 0.1
+shader_parameter/grass_density = 1.0
+shader_parameter/HASHSCALE1 = 0.1031
+shader_parameter/HASHSCALE3 = Vector3(0.1031, 0.103, 0.0973)

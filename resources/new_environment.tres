@@ -1,0 +1,14 @@
+[gd_resource type="Environment" format=3 uid="uid://xb3p3hovuanr"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i5arm"]
+
+[sub_resource type="Sky" id="Sky_m63kh"]
+sky_material = SubResource("ProceduralSkyMaterial_i5arm")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_m63kh")
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0239
+volumetric_fog_length = 125.0
+volumetric_fog_ambient_inject = 1.0

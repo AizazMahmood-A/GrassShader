@@ -1,0 +1,9 @@
+[gd_resource type="MultiMesh" format=3 uid="uid://dgc01xurr7nfu"]
+
+[ext_resource type="ArrayMesh" uid="uid://b02yvvf2ggnv2" path="res://resources/meshes/grass_blade_plane_def.obj" id="1_6grc7"]
+
+[resource]
+transform_format = 1
+use_colors = true
+use_custom_data = true
+mesh = ExtResource("1_6grc7")

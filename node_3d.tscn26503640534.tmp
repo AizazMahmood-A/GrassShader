@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://jvq7ej7wc67q"]
+
+[ext_resource type="MultiMesh" uid="uid://dgc01xurr7nfu" path="res://resources/meshes/grass_multimesh.tres" id="1_a0tk4"]
+[ext_resource type="Material" uid="uid://d0200ibfn64oo" path="res://resources/material/grassMaterial.tres" id="1_r3fl7"]
+[ext_resource type="ArrayMesh" uid="uid://b02yvvf2ggnv2" path="res://resources/meshes/grass_blade_plane.obj" id="2_4arys"]
+[ext_resource type="Script" uid="uid://b0aitdy8u8bo8" path="res://scripts/grass.gd" id="2_noarx"]
+[ext_resource type="Environment" uid="uid://xb3p3hovuanr" path="res://resources/new_environment.tres" id="3_a0tk4"]
+[ext_resource type="Script" uid="uid://ug2t64m1nmhx" path="res://addons/prototyping_toolkit_3d/character_controllers/third_person_character.gd" id="6_wc5p8"]
+[ext_resource type="Script" uid="uid://cspa7vls7b6gh" path="res://addons/prototyping_toolkit_3d/utilities/input_setup.gd" id="7_jsk3o"]
+[ext_resource type="Script" uid="uid://cwvfopl16l1gp" path="res://addons/prototyping_toolkit_3d/objects/simple_floor.gd" id="7_wc5p8"]
+[ext_resource type="Script" uid="uid://btlwxj7o0p3wk" path="res://scripts/grassGenerator.gd" id="8_jsk3o"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4arys"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6iypd"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tereu"]
+albedo_color = Color(0.5411765, 0.16862746, 0.8862745, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cdqbm"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wc5p8"]
+size = Vector3(1000, 1, 1000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jsk3o"]
+albedo_color = Color(0.8862616, 0.88626146, 0.8862615, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4arys"]
+size = Vector3(1000, 1, 1000)
+
+[node name="Node3D" type="Node3D" unique_id=1043732558]
+
+[node name="GrassGenerator" type="Node3D" parent="." unique_id=204653004]
+script = ExtResource("8_jsk3o")
+grass_range = 200.0
+grass_high_lod = ExtResource("2_4arys")
+grass_low_lod = ExtResource("2_4arys")
+grass_material = ExtResource("1_r3fl7")
+
+[node name="grass" type="MultiMeshInstance3D" parent="." unique_id=1017334309]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.10005474, 0)
+visible = false
+material_override = ExtResource("1_r3fl7")
+extra_cull_margin = 12.0
+custom_aabb = AABB(0, 0, 0, 1, 1, 1)
+multimesh = ExtResource("1_a0tk4")
+script = ExtResource("2_noarx")
+spawn_area = Vector2(20, 20)
+density_per_tile = 10
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1507957146]
+transform = Transform3D(0.8438027, -0.40476936, 0.35236222, -1.6703723e-08, 0.65659136, 0.75424665, -0.5366539, -0.6364352, 0.5540335, 0, 3.3886218, 4.082482)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1065250383]
+environment = ExtResource("3_a0tk4")
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1227046062 node_paths=PackedStringArray("camera_3d", "spring_arm", "mesh_instance", "raycast", "pivot") groups=["PlayerGroup"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+script = ExtResource("6_wc5p8")
+camera_3d = NodePath("Node3D/SpringArm3D/Camera3D")
+spring_arm = NodePath("Node3D/SpringArm3D")
+mesh_instance = NodePath("MeshInstance3D")
+raycast = NodePath("Node3D/SpringArm3D/Camera3D/RayCast3D")
+pivot = NodePath("Node3D")
+metadata/_custom_type_script = "uid://ug2t64m1nmhx"
+
+[node name="Node3D" type="Node3D" parent="Player" unique_id=1093241225]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Player/Node3D" unique_id=820398]
+transform = Transform3D(1, 0, 0, 0, 0.9396926, 0.34202012, 0, -0.34202012, 0.9396926, 0.6, 0, 0)
+spring_length = 4.0
+
+[node name="Camera3D" type="Camera3D" parent="Player/Node3D/SpringArm3D" unique_id=826603400]
+
+[node name="RayCast3D" type="RayCast3D" parent="Player/Node3D/SpringArm3D/Camera3D" unique_id=534002050]
+target_position = Vector3(0, 0, -4)
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1485642388]
+shape = SubResource("CapsuleShape3D_4arys")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=1934917244]
+mesh = SubResource("CapsuleMesh_6iypd")
+surface_material_override/0 = SubResource("StandardMaterial3D_tereu")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Player/MeshInstance3D" unique_id=2134656187]
+transform = Transform3D(-1.3113417e-08, -0.3, 0, 0.3, -1.3113417e-08, 0, 0, 0, 0.3, 0, 0.4, -0.4)
+mesh = SubResource("CapsuleMesh_6iypd")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdqbm")
+
+[node name="ProtoInputSetup" type="Node" parent="." unique_id=1587660406]
+script = ExtResource("7_jsk3o")
+wasd_added = true
+joystick_look_added = true
+jump_added = true
+pause_added = true
+metadata/_custom_type_script = "uid://cspa7vls7b6gh"
+
+[node name="ProtoSimpleFloor" type="StaticBody3D" parent="." unique_id=9547290]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+script = ExtResource("7_wc5p8")
+metadata/_custom_type_script = "uid://cwvfopl16l1gp"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ProtoSimpleFloor" unique_id=1017579396]
+mesh = SubResource("BoxMesh_wc5p8")
+surface_material_override/0 = SubResource("StandardMaterial3D_jsk3o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ProtoSimpleFloor" unique_id=947788365]
+shape = SubResource("BoxShape3D_4arys")
